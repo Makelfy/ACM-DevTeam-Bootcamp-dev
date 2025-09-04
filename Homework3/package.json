@@ -1,0 +1,28 @@
+{
+  "name": "homework2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "migration:generate": "typeorm migration:generate -d ./db/data-source.js -o --esm",
+    "migration:run": "typeorm migration:run -d ./db/data-source.js",
+    "migration:revert": "typeorm migration:revert -d ./db/data-source.js",
+    "migration:show": "typeorm migration:show -d ./db/data-source.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.26",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
