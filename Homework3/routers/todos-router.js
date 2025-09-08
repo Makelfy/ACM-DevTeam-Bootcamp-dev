@@ -6,13 +6,7 @@ import {
   updateTodo,
   deleteTodo,
 } from "../services/todo-service.js";
-import {
-  validateTodoCreate,
-  validateTodoFullUpdate,
-  validateTodoHalfUpdate,
-  validateTodoId,
-  validate,
-} from "../middleware.js";
+import { validateTodoCreate, validateTodoId, validate } from "../middleware.js";
 import {
   createTodoSchema,
   todoParamsSchema,

@@ -5,7 +5,7 @@ import {
   getUserTodo,
   deleteUser,
 } from "../services/user-service.js";
-import { validateUserCreate, validateUserId, validate } from "../middleware.js";
+import { validateUserId, validate, validateUserCreate } from "../middleware.js";
 import {
   createUserSchema,
   userParamsSchema,
@@ -15,7 +15,7 @@ import { todoQuerySchema } from "../zodValidations/todo-validations.js";
 const router = express.Router();
 router.get("/", getAllUser);
 
-router.post("/", validate(createUserSchema), createUser);
+router.post("/", validate(createUserSchema), validateUserCreate, createUser);
 
 router.get(
   "/:id/todos",

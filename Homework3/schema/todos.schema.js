@@ -14,7 +14,7 @@ export const TodosSchema = new EntitySchema({
       nullable: false,
     },
     description: {
-      type: "varchar",
+      type: "text",
       nullable: false,
     },
     completed: {
@@ -24,6 +24,15 @@ export const TodosSchema = new EntitySchema({
     userId: {
       type: "int",
       nullable: false,
+    },
+    created_at: {
+      type: "timestamp",
+      default: () => "CURRENT_TIMESTAMP",
+    },
+    updated_at: {
+      type: "timestamp",
+      default: () => "CURRENT_TIMESTAMP",
+      onUpdate: "CURRENT_TIMESTAMP",
     },
   },
   relations: {

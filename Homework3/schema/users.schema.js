@@ -12,14 +12,20 @@ export const UsersSchema = new EntitySchema({
     username: {
       type: "varchar",
       nullable: false,
+      unique: true,
     },
     email: {
       type: "varchar",
       nullable: false,
+      unique: true,
     },
     password: {
       type: "varchar",
       nullable: false,
+    },
+    created_at: {
+      type: "timestamp",
+      default: () => "CURRENT_TIMESTAMP",
     },
   },
   relations: {

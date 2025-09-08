@@ -18,6 +18,4 @@ export const AppDataSource = new DataSource({
   ssl: {
     rejectUnauthorized: false, // for local development
   },
-  migrations: ["./migrations/*.js"],
-  migrationsTableName: "migrations_history",
 });
