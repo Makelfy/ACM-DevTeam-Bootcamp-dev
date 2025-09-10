@@ -1,13 +1,14 @@
-import { UsersSchema } from "../schema/users.schema.js";
-import { TodosSchema } from "../schema/todos.schema.js";
+import { UsersSchema } from "../schemas/users.schema.js";
+import { TodosSchema } from "../schemas/todos.schema.js";
 
 import { AppDataSource } from "../db/data-source.js";
 import { createErrorResponse } from "../error-handling.js";
+import { AppError } from "../middlewares/error.middleware.js";
 
 const userRepository = AppDataSource.getRepository(UsersSchema);
 const todoRepository = AppDataSource.getRepository(TodosSchema);
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
   try {
     const { username, email, password } = req.validatedBody;
 
@@ -19,11 +20,12 @@ export const createUser = async (req, res) => {
 
     res.status(201).json(userWithoutPassword);
   } catch (error) {
-    createErrorResponse("Error creating user:", "Failed to create user", error);
+    console.error("Error creating user:", error);
+    next(new AppError("Failed to create user", 500));
   }
 };
 
-export const getAllUser = async (req, res) => {
+export const getAllUser = async (req, res, next) => {
   try {
     const users = await userRepository.find();
 
@@ -33,15 +35,12 @@ export const getAllUser = async (req, res) => {
 
     res.status(200).json(usersWithoutPasswords);
   } catch (error) {
-    createErrorResponse(
-      "Error fetching users:",
-      "Failed to fetch users",
-      error
-    );
+    console.error("Error getting users:", error);
+    next(new AppError("Failed to get users", 500));
   }
 };
 
-export const getUserTodo = async (req, res) => {
+export const getUserTodo = async (req, res, next) => {
   try {
     const { id } = req.validatedParams;
 
@@ -50,11 +49,12 @@ export const getUserTodo = async (req, res) => {
     });
     res.status(200).json(userTodos);
   } catch (error) {
-    createErrorResponse("Error fetching user", "Failed to fetch user", error);
+    console.error("Error getting user todos:", error);
+    next(new AppError("Failed to get user todos", 500));
   }
 };
 
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.validatedParams;
 
@@ -62,7 +62,8 @@ export const deleteUser = async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    createErrorResponse("Error deleting user", "Failed to delete user", error);
+    console.error("Error deleting user:", error);
+    next(new AppError("Failed to delete user", 500));
   }
 };
 

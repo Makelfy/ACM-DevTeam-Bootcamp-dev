@@ -1,11 +1,11 @@
-import { applyFilters } from "../middleware.js";
 import { AppDataSource } from "../db/data-source.js";
-import { TodosSchema } from "../schema/todos.schema.js";
+import { TodosSchema } from "../schemas/todos.schema.js";
 import { createErrorResponse } from "../error-handling.js";
+import { AppError } from "../middlewares/error.middleware.js";
 
 const todoRepository = AppDataSource.getRepository(TodosSchema);
 
-export const getAllTodos = async (req, res) => {
+export const getAllTodos = async (req, res, next) => {
   try {
     const { completed, q, page, limit, sort, order } = req.validatedQuery;
 
@@ -32,15 +32,12 @@ export const getAllTodos = async (req, res) => {
 
     res.status(200).json(todos);
   } catch (error) {
-    createErrorResponse(
-      "Error fetching todos:",
-      "Failed to fetch todos",
-      error
-    );
+    console.error("Error getting todos:", error);
+    next(new AppError("Failed to get todos", 500));
   }
 };
 
-export const getTodo = async (req, res) => {
+export const getTodo = async (req, res, next) => {
   try {
     const { id } = req.validatedParams;
 
@@ -50,15 +47,12 @@ export const getTodo = async (req, res) => {
 
     res.status(200).json(todo);
   } catch (error) {
-    createErrorResponse(
-      "Error fetching todos:",
-      "Failed to fetch todos",
-      error
-    );
+    console.error("Error getting todo:", error);
+    next(new AppError("Failed to get todo", 500));
   }
 };
 
-export const addTodo = async (req, res) => {
+export const addTodo = async (req, res, next) => {
   try {
     const { title, description, userId } = req.validatedBody;
     const newTodo = todoRepository.create({
@@ -72,15 +66,12 @@ export const addTodo = async (req, res) => {
 
     res.status(201).json(savedTodo);
   } catch (error) {
-    createErrorResponse(
-      "Error creating todos:",
-      "Failed to create todos",
-      error
-    );
+    console.error("Error adding todo:", error);
+    next(new AppError("Failed to add todo", 500));
   }
 };
 
-export const updateTodo = async (req, res) => {
+export const updateTodo = async (req, res, next) => {
   try {
     const { id } = req.validatedParams;
     const updateData = req.validatedBody;
@@ -97,11 +88,12 @@ export const updateTodo = async (req, res) => {
 
     res.status(200).json(savedTodo);
   } catch (error) {
-    createErrorResponse("Error updating todo:", "Failed to update todo", error);
+    console.error("Error updating todo:", error);
+    next(new AppError("Failed to update todo", 500));
   }
 };
 
-export const deleteTodo = async (req, res) => {
+export const deleteTodo = async (req, res, next) => {
   try {
     const { id } = req.validatedParams;
 
@@ -109,6 +101,7 @@ export const deleteTodo = async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    createErrorResponse("Error deleting todo:", "Failed to delete todo", error);
+    console.error("Error deleting todo:", error);
+    next(new AppError("Failed to delete todo", 500));
   }
 };

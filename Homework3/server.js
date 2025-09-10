@@ -1,7 +1,8 @@
 import express from "express";
-import userRouter from "./routers/user-router.js";
-import todosRouter from "./routers/todos-router.js";
+import userRouter from "./routes/user.routes.js";
+import todosRouter from "./routes/todo.routes.js";
 import { AppDataSource } from "./db/data-source.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,8 @@ AppDataSource.initialize()
 
     app.use("/todos", todosRouter);
     app.use("/users", userRouter);
+
+    app.use(errorHandler);
 
     app.listen(3000, () => {
       console.log("Server is running on port 3000");

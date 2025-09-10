@@ -1,16 +1,24 @@
 import express from "express";
+
 import {
   getAllUser,
   createUser,
   getUserTodo,
   deleteUser,
-} from "../services/user-service.js";
-import { validateUserId, validate, validateUserCreate } from "../middleware.js";
+} from "../services/user.service.js";
+
 import {
   createUserSchema,
   userParamsSchema,
 } from "../zodValidations/user-validations.js";
+
 import { todoQuerySchema } from "../zodValidations/todo-validations.js";
+
+import {
+  validate,
+  validateUserCreate,
+  validateUserId,
+} from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 router.get("/", getAllUser);

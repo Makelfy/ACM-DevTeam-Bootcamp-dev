@@ -5,8 +5,8 @@ import {
   addTodo,
   updateTodo,
   deleteTodo,
-} from "../services/todo-service.js";
-import { validateTodoCreate, validateTodoId, validate } from "../middleware.js";
+} from "../services/todo.service.js";
+
 import {
   createTodoSchema,
   todoParamsSchema,
@@ -14,6 +14,11 @@ import {
   updateFullTodoSchema,
   updateHalfTodoSchema,
 } from "../zodValidations/todo-validations.js";
+import {
+  validate,
+  validateTodoCreate,
+  validateTodoId,
+} from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 

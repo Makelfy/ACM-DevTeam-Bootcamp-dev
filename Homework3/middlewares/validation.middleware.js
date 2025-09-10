@@ -1,11 +1,12 @@
+import { AppDataSource } from "../db/data-source.js";
+import { UsersSchema } from "../schemas/users.schema.js";
+import { TodosSchema } from "../schemas/todos.schema.js";
 import z from "zod";
-import { AppDataSource } from "./db/data-source.js";
-import { TodosSchema } from "./schema/todos.schema.js";
-import { UsersSchema } from "./schema/users.schema.js";
 
-const todoRepository = AppDataSource.getRepository(TodosSchema);
 const userRepository = AppDataSource.getRepository(UsersSchema);
+const todoRepository = AppDataSource.getRepository(TodosSchema);
 
+// Zod validation schema
 export const validate = (schema) => {
   return (req, res, next) => {
     try {
@@ -47,7 +48,7 @@ export const validate = (schema) => {
   };
 };
 
-//User Validate
+// User Validations
 export const validateUserId = async (req, res, next) => {
   const { id } = req.validatedParams;
   const user = await userRepository.findOneBy({ id });
@@ -74,16 +75,16 @@ export const validateUserCreate = async (req, res, next) => {
   next();
 };
 
-// Todo Validate
+// Todo validations
 export const validateTodoCreate = async (req, res, next) => {
-  const user = await userRepository.findOneBy({ id: req.body.userId });
+  const user = await userRepository.findOneBy({ id: req.validatedBody.userId });
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
   next();
 };
 export const validateTodoId = async (req, res, next) => {
-  const todo = await todoRepository.findOneBy({ id: Number(req.params.id) });
+  const todo = await todoRepository.findOneBy({ id: req.validatedParams.id });
   if (!todo) {
     return res.status(404).json({ error: "Todo not found" });
   }
