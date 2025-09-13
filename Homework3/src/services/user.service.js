@@ -1,8 +1,7 @@
-import { UsersSchema } from "../schemas/users.schema.js";
-import { TodosSchema } from "../schemas/todos.schema.js";
+import { UsersSchema } from "../db/schemas/users.schema.js";
+import { TodosSchema } from "../db/schemas/todos.schema.js";
 
 import { AppDataSource } from "../db/data-source.js";
-import { createErrorResponse } from "../error-handling.js";
 import { AppError } from "../middlewares/error.middleware.js";
 
 const userRepository = AppDataSource.getRepository(UsersSchema);

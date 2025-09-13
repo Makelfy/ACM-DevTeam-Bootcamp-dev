@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import { TodosSchema } from "../schemas/todos.schema.js";
-import { UsersSchema } from "../schemas/users.schema.js";
+import { TodosSchema } from "./schemas/todos.schema.js";
+import { UsersSchema } from "./schemas/users.schema.js";
 import dotenv from "dotenv";
 dotenv.config();
 

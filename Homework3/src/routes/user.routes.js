@@ -10,15 +10,15 @@ import {
 import {
   createUserSchema,
   userParamsSchema,
-} from "../zodValidations/user-validations.js";
+} from "../middlewares/zodValidations/user-validations.js";
 
-import { todoQuerySchema } from "../zodValidations/todo-validations.js";
+import { todoQuerySchema } from "../middlewares/zodValidations/todo-validations.js";
 
 import {
   validate,
   validateUserCreate,
   validateUserId,
-} from "../middlewares/validation.middleware.js";
+} from "../../middlewares/validation.middleware.js";
 
 const router = express.Router();
 router.get("/", getAllUser);

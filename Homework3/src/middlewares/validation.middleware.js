@@ -90,31 +90,3 @@ export const validateTodoId = async (req, res, next) => {
   }
   next();
 };
-
-export const applyFilters = (todosArray, query) => {
-  let filteredTodos = [...todosArray];
-
-  // Filter by completed status
-  if (query.completed !== undefined) {
-    const isCompleted = query.completed === "true";
-
-    filteredTodos = filteredTodos.filter((t) => {
-      return t.completed === isCompleted;
-    });
-  }
-
-  // Filter by search query
-  if (query.q) {
-    const searchTerm = query.q.toLowerCase();
-    filteredTodos = filteredTodos.filter((todo) => {
-      const titleMatch = todo.title.toLowerCase().includes(searchTerm);
-      const descriptionMatch = todo.description
-        .toLowerCase()
-        .includes(searchTerm);
-      const matches = titleMatch || descriptionMatch;
-      return matches;
-    });
-  }
-
-  return filteredTodos;
-};

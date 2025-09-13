@@ -1,6 +1,6 @@
 import { AppDataSource } from "../db/data-source.js";
-import { TodosSchema } from "../schemas/todos.schema.js";
-import { createErrorResponse } from "../error-handling.js";
+import { TodosSchema } from "../db/schemas/todos.schema.js";
+import { createErrorResponse } from "../../error-handling.js";
 import { AppError } from "../middlewares/error.middleware.js";
 
 const todoRepository = AppDataSource.getRepository(TodosSchema);
