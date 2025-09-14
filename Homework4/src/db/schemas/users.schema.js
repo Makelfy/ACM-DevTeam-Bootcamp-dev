@@ -35,5 +35,11 @@ export const UsersSchema = new EntitySchema({
       inverseSide: "user",
       cascade: true,
     },
+    opaqueTokens: {
+      type: "one-to-many",
+      target: "OpaqueToken",
+      inverseSide: "user",
+      cascade: true,
+    },
   },
 });

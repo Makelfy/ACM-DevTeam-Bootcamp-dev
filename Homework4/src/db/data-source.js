@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { TodosSchema } from "./schemas/todos.schema.js";
 import { UsersSchema } from "./schemas/users.schema.js";
+import { OpaqueTokenSchema } from "./schemas/opaqueToken.schema.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: "neondb",
   synchronize: false,
-  entities: [TodosSchema, UsersSchema],
+  entities: [TodosSchema, UsersSchema, OpaqueTokenSchema],
   migrations: ["./migrations/*.js"],
   migrationsTableName: "migrations_history",
   ssl: {
