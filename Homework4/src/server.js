@@ -1,0 +1,30 @@
+import express from "express";
+import userRouter from "./routes/user.routes.js";
+import meRouter from "./routes/me.routes.js";
+import todosRouter from "./routes/todo.routes.js";
+import authRouter from "./routes/auth.routes.js";
+import { AppDataSource } from "./db/data-source.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
+
+const app = express();
+app.use(express.json());
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database connected");
+
+    app.get("/", (req, res) => {
+      res.send("Hello World.");
+    });
+
+    app.use("/me", meRouter);
+    app.use("/todos", todosRouter);
+    app.use("/users", userRouter);
+    app.use("/auth", authRouter);
+    app.use(errorHandler);
+
+    app.listen(3000, () => {
+      console.log("Server is running on port 3000");
+    });
+  })
+  .catch((err) => console.error("DB connection error:", err));
