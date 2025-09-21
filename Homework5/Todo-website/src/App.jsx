@@ -20,7 +20,11 @@ function App() {
           loader: todosLoader,
         },
         {
-          path: "/auth",
+          path: "/login",
+          element: <AuthPage />,
+        },
+        {
+          path: "/signup",
           element: <AuthPage />,
         },
       ],
